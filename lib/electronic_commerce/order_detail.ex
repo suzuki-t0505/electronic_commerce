@@ -8,4 +8,12 @@ defmodule ElectronicCommerce.OrderDetail do
     belongs_to :item, ElectronicCommerce.Item
     belongs_to :order, ElectronicCommerce.Order
   end
+
+  def changeset(order_detail, params) do
+    order_detail
+    |> cast(params, [:number_ordered, :total_price])
+    |> validate_required(:number_ordered, message: "Please enter your number ordered.")
+    |> validate_number(:number_ordered, greater_than: 0, message: "Please enter 1 or more.")
+    |> validate_required(:total_price, message: "Please enter your total price.")
+  end
 end
